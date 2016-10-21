@@ -12,6 +12,7 @@ obj.up: 松开元素时触发
 obj.range: 是否限制元素拖拽范围
 
 exm:
+
 var obj = {
 
     // onmousedown触发时执行
@@ -39,4 +40,5 @@ var obj = {
 
     range: true // 限制拖拽范围
 }
+
 $(ele).drag(obj);
