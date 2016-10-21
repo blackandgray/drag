@@ -25,6 +25,7 @@
         }
     </style>
     <script src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min.js"></script>
+    <script src="./jquery-drag.js"></script>
 </head>
 <body>
     <div class="container">
@@ -33,69 +34,13 @@
 </body>
 </html>
 <script>
-    (function($){
-        $.fn.drag = function(cb) {
-            var x = 0,
-                y = 0;
-            this.css('position', 'absolute');
-            this.on('mousedown', function(e){
-                var _this = $(this);
-                x = e.clientX - parseFloat(_this.css('left'));
-                y = e.clientY - parseFloat(_this.css('top'));
-                cb.down && cb.down();
-
-                $(document).on('mousemove', function(e){
-                    _this.css({
-                        'left': e.clientX - x,
-                        'top': e.clientY - y
-                    });
-                    var obj = {};
-                    obj.ele = _this;
-                    obj.left = parseFloat(_this.css('left'));
-                    obj.top = parseFloat(_this.css('top'));
-                    obj.e = e;
-                    obj.box = _this.parent('.container');
-                    cb.move && cb.move(obj);
-                });
-
-                $(document).on('mouseup', function(e){
-                    $(document).off('mousemove');
-                    $(document).off('mouseup');
-                    cb.up && cb.up();
-                });
-            });
-        }
-    })(jQuery);
-
     $('.item').drag({
         down: function() {
-            console.log(this);
         },
         move: function(obj) {
-            console.log(obj.e);
-            if(obj.left > 300) {
-                obj.ele.css('background-color', '#090');
-            }
         },
-        up: function() {
-
-        }
+        up: function(obj) {
+        },
+        range: true
     });
-
-    var item = document.getElementById('item');
-    var x = 0,
-        y = 0;
-    // item.onmousedown = function(e) {
-    //     x = e.clientX - this.offsetLeft;
-    //     y = e.clientY - this.offsetTop;
-    //     document.onmousemove = function(e) {
-    //         item.style.left = e.clientX - x + 'px';
-    //         item.style.top = e.clientY - y + 'px';
-    //     }
-    //     document.onmouseup = function() {
-    //         document.onmousemove = null;
-    //         document.onmouseup = null;
-    //     }
-    //     return false;
-    // }
 </script>
